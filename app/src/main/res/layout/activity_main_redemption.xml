@@ -49,7 +49,6 @@
                 app:tabBackground="@drawable/tab_selector"
                 app:tabIndicatorColor="@color/colorWhite"></com.google.android.material.tabs.TabLayout>
 
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
@@ -103,7 +102,6 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <androidx.appcompat.widget.Toolbar
             app:navigationIcon="@drawable/ic_menu_black_24dp"
             android:id="@+id/toolbar"
@@ -111,7 +109,15 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="Home"/>
-
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_gravity="bottom"
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorWhite"
+        app:menu="@menu/bottom_navigation" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
