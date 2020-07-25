@@ -22,6 +22,7 @@ public class IroidApiClient {
 
     private static IroidApiClient instance;
     private MutableLiveData<Data> mData;
+    private MutableLiveData<Boolean> mIroidRequestTimeout = new MutableLiveData<>();
 
     private RetrieveIroidRunnable mRetrieveIroidRunnable;
 
@@ -36,6 +37,10 @@ public class IroidApiClient {
         return instance;
     }
 
+    public MutableLiveData<Boolean> getmIroidRequestTimeout() {
+        return mIroidRequestTimeout;
+    }
+
     public MutableLiveData<Data> getmData() {
         return mData;
     }
@@ -47,10 +52,12 @@ public class IroidApiClient {
         mRetrieveIroidRunnable = new RetrieveIroidRunnable();
 
         final Future handler = AppExecutors.getInstance().networkIO().submit(mRetrieveIroidRunnable);
+        mIroidRequestTimeout.setValue(false);
         AppExecutors.getInstance().networkIO().schedule(new Runnable() {
             @Override
             public void run() {
                 // Let the user know it is timeout
+                mIroidRequestTimeout.postValue(true);
                 handler.cancel(true);
             }
         }, NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
@@ -65,12 +72,9 @@ public class IroidApiClient {
         public void run() {
             try {
                 Response response = getIroid().execute();
-                Log.d(TAG, "run: Inside run");
                     Data data = ((IroidResponse) response.body()).getData();
-                Log.d(TAG, "run: " + ((IroidResponse) response.body()).getData().getFreshProducts());
                     mData.postValue(data);
             } catch (IOException e) {
-                Log.e(TAG, "run: IOException Caught", e);
                 e.printStackTrace();
                 mData.postValue(null);
             }

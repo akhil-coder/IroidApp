@@ -1,6 +1,7 @@
 package com.example.iroidapp.repositories;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.iroidapp.models.Data;
 import com.example.iroidapp.requests.IroidApiClient;
@@ -12,6 +13,10 @@ public class IroidRepository {
 
     private static IroidRepository instance;
     private IroidApiClient mIroidApiClient;
+
+    public MutableLiveData<Boolean> getmIroidRequestTimeout() {
+        return mIroidApiClient.getmIroidRequestTimeout();
+    }
 
     public LiveData<Data> getIroidData(){
         return mIroidApiClient.getmData();

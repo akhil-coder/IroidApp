@@ -2,6 +2,7 @@ package com.example.iroidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,6 +14,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.iroidapp.adapters.CategoryRecyclerViewAdapter;
 import com.example.iroidapp.adapters.FragmentPagerAdapter;
@@ -35,6 +39,8 @@ public class HomeScreenActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     RecyclerView recyclerViewCategory;
     RecyclerView recyclerViewNewProducts;
+    NestedScrollView nestedScrollView;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,8 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         mTabLayout = findViewById(R.id.tab_layout);
         mViewPager = findViewById(R.id.viewpager);
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+        progressBar = findViewById(R.id.progressBarHomeScreen);
 
         homeScreenViewModel = ViewModelProviders.of(this).get(HomeScreenViewModel.class);
         homeScreenViewModel.callIroidResponseApi();
@@ -57,6 +65,8 @@ public class HomeScreenActivity extends AppCompatActivity {
             @Override
             public void onChanged(Data data) {
                 if (data != null) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    nestedScrollView.setVisibility(View.VISIBLE);
                     Banners[] banners = data.getBanners();
                     Categories[] categoriesArrayList = data.getCategories();
                     FreshProducts[] freshProducts = data.getFreshProducts();
