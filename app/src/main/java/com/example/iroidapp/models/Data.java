@@ -2,7 +2,7 @@ package com.example.iroidapp.models;
 
 public class Data
 {
-    private FreshProducts[] freshProducts;
+    private FreshProducts[] fresh_products;
 
     private Categories[] categories;
 
@@ -10,14 +10,21 @@ public class Data
 
     private String[] ProductsForYou;
 
+    public Data(FreshProducts[] freshProducts, Categories[] categories, Banners[] banners, String[] productsForYou) {
+        this.fresh_products = freshProducts;
+        this.categories = categories;
+        this.banners = banners;
+        ProductsForYou = productsForYou;
+    }
+
     public FreshProducts[] getFreshProducts()
     {
-        return freshProducts;
+        return fresh_products;
     }
 
     public void setFreshProducts(FreshProducts[] freshProducts)
     {
-        this.freshProducts = freshProducts;
+        this.fresh_products = freshProducts;
     }
 
     public Categories[] getCategories ()

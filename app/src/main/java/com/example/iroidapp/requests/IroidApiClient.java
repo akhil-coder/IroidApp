@@ -67,6 +67,7 @@ public class IroidApiClient {
                 Response response = getIroid().execute();
                 Log.d(TAG, "run: Inside run");
                     Data data = ((IroidResponse) response.body()).getData();
+                Log.d(TAG, "run: " + ((IroidResponse) response.body()).getData().getFreshProducts());
                     mData.postValue(data);
             } catch (IOException e) {
                 Log.e(TAG, "run: IOException Caught", e);
