@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IroidApp</string>
+    <string name="categories">Categories</string>
 </resources>

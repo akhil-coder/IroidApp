@@ -1,6 +1,7 @@
 package com.example.iroidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -11,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 
 import com.example.iroidapp.adapters.CategoryRecyclerViewAdapter;
 import com.example.iroidapp.adapters.FragmentPagerAdapter;
@@ -38,13 +40,32 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         mTabLayout = findViewById(R.id.tab_layout);
         mViewPager = findViewById(R.id.viewpager);
 
         homeScreenViewModel = ViewModelProviders.of(this).get(HomeScreenViewModel.class);
         homeScreenViewModel.callIroidResponseApi();
         subscribeObservers();
+    }
 
+    public void subscribeObservers() {
+        homeScreenViewModel.getmData().observe(this, new Observer<Data>() {
+            @Override
+            public void onChanged(Data data) {
+                if (data != null) {
+                    Banners[] banners = data.getBanners();
+                    Categories[] categoriesArrayList = data.getCategories();
+                    FreshProducts[] freshProducts = data.getFreshProducts();
+                    initBanners(banners);
+                    initCategoryRecyclerView(categoriesArrayList);
+                    initProductsRecyclerView(freshProducts);
+                }
+            }
+        });
     }
 
     private void initProductsRecyclerView(FreshProducts[] freshProducts) {
@@ -74,21 +95,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager, true);
     }
 
-    public void subscribeObservers() {
-        homeScreenViewModel.getmData().observe(this, new Observer<Data>() {
-            @Override
-            public void onChanged(Data data) {
-                Log.d(TAG, "onChanged: Data changed ");
-                if (data != null) {
-                    Banners[] banners = data.getBanners();
-                    Categories[] categoriesArrayList = data.getCategories();
-                    FreshProducts[] freshProducts = data.getFreshProducts();
-                    Log.d(TAG, "onChanged: Product Name " + freshProducts[0].getName());
-                    initBanners(banners);
-                    initCategoryRecyclerView(categoriesArrayList);
-                    initProductsRecyclerView(freshProducts);
-                }
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
