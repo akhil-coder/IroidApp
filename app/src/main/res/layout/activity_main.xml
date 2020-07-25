@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f2f2f2"
     tools:context=".HomeScreenActivity">
 
     <LinearLayout
@@ -45,5 +46,21 @@
             android:layout_width="match_parent"
             android:layout_height="800dp"
             android:text="TextView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_new_products"
+            android:layout_width="match_parent"
+            android:layout_height="800dp"
+            android:text="TextView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_new_products"
+            android:layout_width="match_parent"
+            android:layout_height="500dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
